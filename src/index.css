@@ -1,0 +1,17 @@
+body {
+  margin: 0;
+  font-family: 'Hind Siliguri', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: 'Hind Siliguri', sans-serif;
+}
+
+.up::before {
+  display: inline-block;
+  padding-right: 0.5rem;
+  color: #6c757d;
+  content: "\02C3";
+}
