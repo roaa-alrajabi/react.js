@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
 
 const Form = ({ data, setData }) => {
@@ -18,15 +18,17 @@ const Form = ({ data, setData }) => {
       .get(`https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f`)
       .then((res) => {
         results = res.data.result.auditLog
+        console.log(results);
          result = results.filter((result) => {
-          console.log(result.creationTimestamp);
           return (
             result.applicationId === parseInt(applicationID) ||
             result.actionType === ActionType ||
             result.applicationType === ApplicationType ||
            (result.creationTimestamp >= FormDate &&  result.creationTimestamp <= ToDate)
+ 
           )
         })
+
         setData(result)
       })
   }
@@ -81,6 +83,8 @@ const Form = ({ data, setData }) => {
             <option value="DARI_REFRESH_TOKEN">DARI_REFRESH_TOKEN</option>
             <option value="INITIATE_APPLICATION">INITIATE_APPLICATION</option>
             <option value="CERT_PROP_OWNERSHIP">CERT_PROP_OWNERSHIP</option>
+            <option value=" ADD_EMPLOYEE"> ADD_EMPLOYEE</option>
+           
           </select>
         </div>
 
