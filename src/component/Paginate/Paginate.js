@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import ReactDOM from 'react-dom';
 import ReactPaginate from 'react-paginate';
 import axios from 'axios';
 
@@ -21,7 +20,7 @@ import axios from 'axios';
   useEffect(() => {
      setCurrentItems(sliceArray);
     setPageCount(Math.ceil(results.length / numberOfRow));
-    console.log(currentItems);
+    console.log(currentItems, results.length,sliceArray);
   },[itemOffset, numberOfRow]);
 
   const handlePageClick = (event) => {
