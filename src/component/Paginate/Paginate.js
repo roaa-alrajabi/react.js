@@ -16,10 +16,12 @@ import axios from 'axios';
      sliceArray = results.slice(itemOffset, endOffset);
     
   });
+  console.log(resultObj);
   
   useEffect(() => {
      setCurrentItems(sliceArray);
     setPageCount(Math.ceil(results.length / numberOfRow));
+    console.log(currentItems);
   },[itemOffset, numberOfRow]);
 
   const handlePageClick = (event) => {
@@ -27,7 +29,7 @@ import axios from 'axios';
     setItemOffset(newOffset);
     setCurrentItems(sliceArray)
     results = sliceArray
-    console.log(results);
+    console.log(results,pageCount);
     setData(results);
   };
 

@@ -25,10 +25,10 @@ const Form = ({ data, setData }) => {
             result.actionType === ActionType ||
             result.applicationType === ApplicationType ||
            (result.creationTimestamp >= FormDate &&  result.creationTimestamp <= ToDate)
- 
           )
         })
-
+        console.log(resultObj);
+    
         setData(result)
       })
   }
