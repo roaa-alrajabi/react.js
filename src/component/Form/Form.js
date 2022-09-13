@@ -9,7 +9,25 @@ const Form = ({ data, setData }) => {
   const[FormDate ,setFormDate ] =useState('')
   const[ToDate ,setToDate ] =useState('')
 
+  const optionsActionType = [
+    { value: '', label: '' },
+    { value: 'DARI_REFRESH_TOKEN', label: 'dari refresh token' },
+    { value: 'INITIATE_APPLICATION', label: 'initiate application' },
+    { value: 'SUBMIT_APPLICATION', label: 'submit application' },
+    { value: 'ADD_EMPLOYEE', label: 'add employee' },
 
+];
+
+const optionsApplicationType = [
+  { value: '', label: '' },
+  { value: 'CERT_TITLE_DEED_PLOT', label: 'Cert Title Deed Plot' },
+  { value: 'LEASE_REGISTRATION', label: 'Lease Registration' },
+  { value: 'ADD_POA', label: 'Add Poa' },
+  { value: 'ADD_COMPANY', label: 'Add Company' },
+  { value: 'ADD_COMPANY_EMPLOYEE', label: 'Add Company Employee' },
+  { value: 'CERT_PROP_OWNERSHIP', label: 'Cert Prop Ownership' },
+  
+];
   let results = {}
   let result =[]
   const Sreach = (e) => {
@@ -18,17 +36,15 @@ const Form = ({ data, setData }) => {
       .get(`https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f`)
       .then((res) => {
         results = res.data.result.auditLog
-        console.log(results);
          result = results.filter((result) => {
           return (
-            result.applicationId === parseInt(applicationID) ||
-            result.actionType === ActionType ||
-            result.applicationType === ApplicationType ||
-           (result.creationTimestamp >= FormDate &&  result.creationTimestamp <= ToDate)
+            result.applicationId == applicationID &&
+            result.logInfo.includes(name)&&
+            result.actionType.includes(ActionType) &&
+            result.applicationType.includes(ApplicationType) ||
+             (result.creationTimestamp >= FormDate &&  result.creationTimestamp <= ToDate) 
           )
         })
-        console.log(resultObj);
-    
         setData(result)
       })
   }
@@ -64,11 +80,8 @@ const Form = ({ data, setData }) => {
             className="custom-select"
             onChange={(e) => setApplicationType(e.target.value)}
           >
-            <option value="DARI_REFRESH_TOKEN">DARI_REFRESH_TOKEN</option>
-            <option value="LEASE_CLOSURE">LEASE_CLOSURE</option>
-            <option value="DARI_REFRESH_TOKEN">DARI_REFRESH_TOKEN</option>
-            <option value="INITIATE_APPLICATION">INITIATE_APPLICATION</option>
-            <option value="CERT_PROP_OWNERSHIP">CERT_PROP_OWNERSHIP</option>
+            {optionsApplicationType.map(({ value, label }, index)=><option value={value} key={index} >{label}</option>)} 
+          
           </select>
         </div>
 
@@ -78,13 +91,7 @@ const Form = ({ data, setData }) => {
             className="custom-select"
             onChange={(e) => setActionType(e.target.value)}
           >
-            <option value="DARI_REFRESH_TOKEN">DARI_REFRESH_TOKEN</option>
-            <option value="LEASE_CLOSURE">LEASE_CLOSURE</option>
-            <option value="DARI_REFRESH_TOKEN">DARI_REFRESH_TOKEN</option>
-            <option value="INITIATE_APPLICATION">INITIATE_APPLICATION</option>
-            <option value="CERT_PROP_OWNERSHIP">CERT_PROP_OWNERSHIP</option>
-            <option value=" ADD_EMPLOYEE"> ADD_EMPLOYEE</option>
-           
+           {optionsActionType.map(({ value, label }, index)=><option value={value} key={index} >{label}</option>)} 
           </select>
         </div>
 
@@ -104,12 +111,12 @@ const Form = ({ data, setData }) => {
         </div>
 
         <div className="col-auto  mx-3 my-4">
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-primary" disabled={ name.length ==0 && applicationID.length == 0 &&  ApplicationType.length == 0 && ActionType.length == 0 && FormDate.length == 0 &&  ToDate.length == 0}>
             Search looger
           </button>
         </div>
         <div className="col-auto  mx-3 my-4">
-          <button type="submit" className="btn btn-primary" onClick={(e) => window.location.reload(false)}>
+          <button type="submit" className="btn btn-primary" onClick={() => window.location.reload(false)}>
             reset form 
           </button>
         </div>

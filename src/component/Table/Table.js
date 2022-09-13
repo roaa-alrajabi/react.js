@@ -37,8 +37,7 @@ const Table = () => {
       <div className="d-flex justify-content-center" >
       <Paginate data={data} setData={setData} numberOfRow={10} />
       </div>
-      :
-      null
+      :''
 }
     </>
   );
