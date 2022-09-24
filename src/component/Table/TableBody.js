@@ -1,13 +1,17 @@
 
-function FetchData({data}){
- 
+
+function FetchData({data ,loading}){
       return (
         <>
-        {!data ? (
+
+        {!data || loading ? (
           <div className="container"> 
-          <h1 className="text-center">lodding </h1> 
+          <div className="row">
+          <div className="col">loading</div>
+           </div> 
           </div>
-        ) : (
+        ) 
+        : (
             <tbody >
             {data.map((data,i) => (
                 <tr key={i} >

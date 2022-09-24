@@ -9,11 +9,16 @@ import Paginate from '../Paginate/Paginate';
 
 const Table = () => {
   
-  const [data, setData] = useState(null);
+  const [data, setData] = useState([]); 
+  const [loading, setLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [DataPerPage] = useState(10);
   
   const getData = async () => {
       const { data } = await axios.get(`https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f`);
-      setData(data.result?.auditLog.slice(0, 10));
+      setLoading(true)
+      setData(data.result?.auditLog);
+      setLoading(false)
     };
     
     useEffect(() => {
@@ -22,23 +27,33 @@ const Table = () => {
       
     },[]);
 
+  const indexOfLastData = currentPage * DataPerPage;
+  const indexOfFirstData = indexOfLastData - DataPerPage;
+  const currentData = data.slice(indexOfFirstData, indexOfLastData)
+
+
+  const paginate = pageNumber => setCurrentPage(pageNumber);
+
+
   return (
     <>
-    <div>
-    <Form data={data} setData={setData}/>
-    </div>
+    
+    <Form  setData={setData}/>
     <table  className="table">
       <thead  className="thead">
-      <TableHeader data={data} setData={setData}/>
+      <TableHeader data={data} setData={setData}  />
       </thead>
-      <TableBody data={data}/>
+      <TableBody data={currentData}  loading={loading}/>
       </table>
-      { data ?
+       { data ?
       <div className="d-flex justify-content-center" >
-      <Paginate data={data} setData={setData} numberOfRow={10} />
+      <Paginate DataPerPage={DataPerPage}
+        totalPosts={data.length}
+        paginate={paginate}
+         />
       </div>
       :''
-}
+} 
     </>
   );
 };
