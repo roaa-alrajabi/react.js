@@ -1,17 +1,14 @@
 
 
-function FetchData({data ,loading}){
+function FetchData({data }){
       return (
         <>
 
-        {!data || loading ? (
-          <div className="container"> 
-          <div className="row">
-          <div className="col">loading</div>
-           </div> 
-          </div>
-        ) 
-        : (
+        {data.length <= 0   ? 
+         <div className="d-flex" >
+          <div> No there is data  </div>
+         </div>
+        : 
             <tbody >
             {data.map((data,i) => (
                 <tr key={i} >
@@ -24,8 +21,7 @@ function FetchData({data ,loading}){
                   <td > {data.creationTimestamp}</td>
                 </tr>
                 ))}
-                </tbody>
-        )
+                </tbody>    
     }
       </>
       );

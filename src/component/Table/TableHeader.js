@@ -18,7 +18,7 @@ const Header = [
     const [sortField, setSortField] = useState("");
     const [order, setOrder] = useState("asc");
      const handleSortingChange = async (header_key) => {
-      console.log(data);
+      var SortData = [... data]
       axios
       .get(`https://run.mocky.io/v3/a2fbc23e-069e-4ba5-954c-cd910986f40f`)
       .then((res) => {
@@ -29,16 +29,14 @@ const Header = [
         setOrder(sortOrderIcon);
 
         function compare(a, b) {
-          if(order === "asc"){
-           
-                return a[sortField] - b[sortField]  
+          if(order === "desc"){
+                return a[sortField] - b[sortField]
             }
-            
             return b[sortField] - a[sortField]   
             
           }
-          result.sort(compare);
-        setData(result)
+          SortData.sort(compare);
+        setData(SortData)
     })
   }
 
@@ -49,7 +47,7 @@ const Header = [
            <tr >
             {Header.map(({ label, header_key ,sortable }) => {
             
-                const cl = sortable ? sortField === header_key && order === "asc" ? "fa fa-caret-down": sortField === header_key && order === "desc" ? "fa fa-caret-up": "fa fa-caret-up": "";
+                const cl = sortable ? sortField === header_key && order === "asc" ? "fa fa-caret-up": sortField === header_key && order === "desc" ? "fa fa-caret-down": "fa fa-caret-up": "";
               return (
                 <th scope="col"
                   key={header_key}

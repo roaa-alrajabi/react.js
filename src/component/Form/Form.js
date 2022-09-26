@@ -49,10 +49,10 @@ const Form = ({ setData }) => {
         search_result = filter_result.filter((result) => {
           return (
             result?.actionType?.includes(ActionType) &&
-            result?.applicationType?.includes(ApplicationType) &&
-            result?.applicationId?.toString().includes(applicationID) &&
+            (ApplicationType == "" ? true : result?.applicationType?.includes(ApplicationType))  &&
+            (applicationID == "" ? true : result?.applicationId?.toString().includes(applicationID))&&
             (name == '' ? true : result?.logInfo?.includes(name)) &&
-            (FormDate == '' || ToDate == ''
+            ((FormDate == '' || ToDate == '')
               ? true
               : (result.creationTimestamp >= FormDate &&
                 result.creationTimestamp <= ToDate))
@@ -149,8 +149,7 @@ const Form = ({ setData }) => {
               applicationID.length == 0 &&
               ApplicationType.length == 0 &&
               ActionType.length == 0 &&
-              FormDate.length == 0 &&
-              ToDate.length == 0
+               (FormDate.length == 0  || ToDate.length == 0)
             }
           >
             Search looger

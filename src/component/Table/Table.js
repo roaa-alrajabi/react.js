@@ -43,7 +43,8 @@ const Table = () => {
       <thead  className="thead">
       <TableHeader data={data} setData={setData}  />
       </thead>
-      <TableBody data={currentData}  loading={loading}/>
+      
+      <TableBody data={currentData}  />
       </table>
        { data ?
       <div className="d-flex justify-content-center" >
